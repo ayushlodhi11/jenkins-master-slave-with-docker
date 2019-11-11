@@ -13,6 +13,9 @@ RUN apt-get update && \
     apt-get install -y docker-ce docker-ce-cli containerd.io && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN curl -o /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq && \
+  chmod +x /usr/local/bin/jq
+
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
     echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list && \
     sudo apt-get update && \
