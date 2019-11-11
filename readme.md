@@ -1,3 +1,6 @@
+docker pull jenkinsci/jnlp-slave
+docker pull jenkins/jenkins
+
 docker build -t ayushlodhi/jenkins -f Dockerfile.master .
 docker push ayushlodhi/jenkins
 docker tag ayushlodhi/jenkins ayushlodhi/jenkins:v1.1
