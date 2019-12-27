@@ -5,16 +5,23 @@ ARG DC_VERSION=18.06.1
 USER root
 
 RUN apt-get update && \
-    apt-get install -y apt-transport-https ca-certificates curl software-properties-common && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+    apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2 && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    apt-key fingerprint 0EBFCD88
 
-RUN apt-get update && \
-    apt-get install -y docker-ce docker-ce-cli containerd.io && \
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+
+RUN apt-get update
+
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io zip unzip vim && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN curl -o /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq && \
   chmod +x /usr/local/bin/jq
+
+RUN sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    sudo chmod +x /usr/local/bin/docker-compose && \
+    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
     echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list && \
