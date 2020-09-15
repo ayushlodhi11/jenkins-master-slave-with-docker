@@ -1,4 +1,4 @@
-FROM jenkins/jenkins
+FROM jenkins/jenkins:2.257
 
 ARG DC_VERSION=18.06.3
 

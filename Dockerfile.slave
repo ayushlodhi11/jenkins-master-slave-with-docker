@@ -1,4 +1,4 @@
-FROM jenkinsci/jnlp-slave
+FROM jenkins/inbound-agent:4.3-4
 
 ARG DC_VERSION=18.06.1
 
